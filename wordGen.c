@@ -9,16 +9,36 @@ int main(){
     printf("What word will be generated? ");
     char word[90];
     scanf("%90s", word);
-    int len = strlen(word);
+
     // printf("%d", len);
-    printf("How will it be generated?\n");
+    printf("How will it be generated? (1/2)\n");
+    printf("1. Randomly?\n");
+    printf("2. Incrementally?\n");
 
+    int response;
+    scanf("%d", &response); 
 
+    switch (response)
+    {
+    case 1:
+        randomGen(word);
+        break;
+    case 2:
+        incrementalGen(word);
+        break;
+    default:
+        break;
+    }
 
+    return 1;
+}
+
+void randomGen(char input[]){
+    int len = strlen(input);
     char outString[91];
     for(int i = 0; i < len; i++){
         int value = -1;
-        int charAscii = (int) word[i];
+        int charAscii = (int) input[i];
         int beginRan;
         int endRan;
         // printf("position: %d, char: %c, value: %d\n", i, word[i], charAscii);
@@ -38,6 +58,30 @@ int main(){
            Sleep(15);
         }
     }
+}
 
-    return 1;
+void incrementalGen(char input[]) {
+    int len = strlen(input);
+    char outString[91];
+    for(int i = 0; i < len; i++) {
+
+        int value;
+        int charAscii = (int) input[i];
+
+        if(charAscii > 64 && charAscii < 91) {
+            value = 65;
+        }
+        else {
+            value = 97;
+        }
+
+        while(value <= charAscii){
+           outString[i] = (char) value;
+           outString[i + 1] = '\0'; 
+           printf("%s\n", outString);
+           Sleep(30);
+           value++;
+        }
+
+    }
 }
