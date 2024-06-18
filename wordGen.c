@@ -96,6 +96,15 @@ void incrementalGen(char input[]) {
     }
 }
 
+bool includes (int arr[], int length, int value) { // check if the array contains the value 
+    for (int i = 0; i < length; i++) {
+        if(arr[i] == value) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void genEachLetterOnce(char input[]) {
     int len = strlen(input);
     char outString[91];
@@ -104,8 +113,8 @@ void genEachLetterOnce(char input[]) {
 
         int beginRan;
         int endRan;
-        int value;
-        int usedVals[26];
+        int value = -1;
+        int usedVals[26] = {0};
         int valLoc = 0;
 
         if(charAscii > 64 && charAscii < 91) {
@@ -117,23 +126,17 @@ void genEachLetterOnce(char input[]) {
             endRan = 122;
         }
         while(value != charAscii) {
-            while (!includes(usedVals,26,value)) {
+            do {
                 value = beginRan + rand() % (endRan - beginRan + 1);  // generate until unused found
-            }
+            } while (includes(usedVals,26,value));
+
             usedVals[valLoc] = value; // add to used store
             valLoc++;    
 
             outString[i] = (char) value;
             outString[i + 1] = '\0'; 
             printf("%s\n", outString);
-            Sleep(15);
+            Sleep(30);
         }
     }
-}
-
-bool includes (int arr[], int length, int value) { // check if the array contains the value 
-    for (int i = 0; i < length; i++) {
-        if(arr[i] == value) return true;
-    }
-    return false;
 }
